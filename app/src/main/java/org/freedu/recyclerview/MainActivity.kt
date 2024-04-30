@@ -1,5 +1,6 @@
 package org.freedu.recyclerview
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.enableEdgeToEdge
@@ -19,13 +20,24 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         val player = ArrayList<Player>()
 
-        player.add(Player("Musfiqur Rahim", "He is Right handed batsman", R.drawable.musfiq))
-        player.add(Player("Tamim Iqbal", "He is left handed batsman", R.drawable.tamim))
-        player.add(Player("Sakib Al Hasan", "He is a number 1 Allrounder", R.drawable.sakib))
-        player.add(Player("Mahmudullah Riyad", "He is Right handed batsman", R.drawable.mahmudullah))
-        player.add(Player("Mashrafe Bin Mortaza", "He is Right handed bowler", R.drawable.mashrafe))
+        player.add(Player("Musfiqur Rahim", "He is Right handed batsman", R.drawable.musfiq,"He is Right handed batsman"))
+        player.add(Player("Tamim Iqbal", "He is left handed batsman", R.drawable.tamim, "He is left handed batsman"))
+        player.add(Player("Sakib Al Hasan", "He is a number 1 Allrounder", R.drawable.sakib, "He is a number 1 Allrounder"))
+        player.add(Player("Mahmudullah Riyad", "He is Right handed batsman", R.drawable.mahmudullah, "He is Right handed batsman"))
+        player.add(Player("Mashrafe Bin Mortaza", "He is Right handed bowler", R.drawable.mashrafe, "He is Right handed bowler"))
 
-        binding.recyclerView.adapter = PlayerAdapter(player)
+        var playerAdapter = PlayerAdapter(player)
+        binding.recyclerView.adapter = playerAdapter
+
+        playerAdapter.onClick = {
+            val intent = Intent(this, DetailsActivity::class.java)
+            intent.putExtra("name",it.playerName)
+            intent.putExtra("details",it.longDetails)
+            intent.putExtra("image",it.playerImage)
+            startActivity(intent)
+        }
+
+
 
     }
 }
